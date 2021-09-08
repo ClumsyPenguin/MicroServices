@@ -60,3 +60,4 @@ E:\Projects\CSharp\MicroServices\PlatformService\PlatformService\obj\Debug\net5.
 E:\Projects\CSharp\MicroServices\PlatformService\PlatformService\obj\Debug\net5.0\PlatformService.pdb
 E:\Projects\CSharp\MicroServices\PlatformService\PlatformService\obj\Debug\net5.0\PlatformService.genruntimeconfig.cache
 E:\Projects\CSharp\MicroServices\PlatformService\PlatformService\obj\Debug\net5.0\refint\PlatformService.dll
+E:\Projects\CSharp\MicroServices\PlatformService\PlatformService\obj\Debug\net5.0\PlatformService.csproj.CopyComplete
