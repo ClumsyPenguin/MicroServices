@@ -4,9 +4,9 @@ using PlatformService.Models;
 
 namespace PlatformService.Profiles
 {
-    public class PlatoformsProfile : Profile
+    public class PlatformsProfile : Profile
     {
-        public PlatoformsProfile()
+        public PlatformsProfile()
         {
             // Source -> Target
             CreateMap<Platform,PlatformReadDto>();
