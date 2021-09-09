@@ -16,7 +16,7 @@ namespace PlatformService.Controllers
     {
         private readonly IPlatformRepo _repository;
         private readonly IMapper _mapper;
-        
+
         public PlatformsController(IPlatformRepo repository, IMapper mapper)
         {
             _repository = repository;
@@ -27,7 +27,7 @@ namespace PlatformService.Controllers
         public ActionResult<IEnumerable<PlatformReadDto>> GetAllPlatforms()
         {
             Console.WriteLine("Getting platforms...");
-            
+
             var platformItem = _repository.GetAllPlaforms();
 
             if (!platformItem.Any())
@@ -35,28 +35,34 @@ namespace PlatformService.Controllers
 
             return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItem));
         }
-        
+
         [HttpGet("{id}", Name = "GetPlatformById")]
         public ActionResult<PlatformReadDto> GetPlatformById(int id)
         {
+            if (id <= 0)
+                return NotFound();
+
             var platformItem = _repository.GetPlatformById(id);
-            
+
             if (platformItem is null)
                 return NotFound();
 
             return Ok(_mapper.Map<PlatformReadDto>(platformItem));
         }
-        
+
         [HttpPost]
         public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto platformCreateDto)
         {
+            if (!ModelState.IsValid || platformCreateDto is null)
+                return BadRequest();
+
             var platformModel = _mapper.Map<Platform>(platformCreateDto);
             _repository.CreatePlatform(platformModel);
             _repository.SaveChanges();
 
             var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
-            
-            return CreatedAtRoute(nameof(GetPlatformById),new{Id = platformReadDto.Id},platformReadDto);
+
+            return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id }, platformReadDto);
         }
     }
 }
