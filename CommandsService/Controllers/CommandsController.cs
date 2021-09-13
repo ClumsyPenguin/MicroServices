@@ -16,13 +16,5 @@ namespace CommandsService.Controllers
         {
             
         }
-
-        [HttpPost]
-        public ActionResult TestInbounConnections()
-        {
-            Console.WriteLine("--> Inbound POST # Command Service");
-
-            return Ok("Inbound test of from platforms controller");
-        }
     }
 }
