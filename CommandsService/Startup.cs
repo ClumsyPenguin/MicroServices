@@ -8,15 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using platformservice.SyncDataServices.Http;
-using PlatformService.Data;
-using PlatformService.SyncDataServices.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PlatformService
+namespace CommandsService
 {
     public class Startup
     {
@@ -29,18 +26,11 @@ namespace PlatformService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(opt => 
-                opt.UseInMemoryDatabase("InMem"));
-
-            services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
-            services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddControllers();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlatformService", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommandsService", Version = "v1" });
             });
-            Console.WriteLine($"--> CommanService Endpoint {Configuration["CommandService"]}");
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -48,7 +38,7 @@ namespace PlatformService
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlatformService v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CommandsService v1"));
             }
 
             app.UseHttpsRedirection();
@@ -61,8 +51,6 @@ namespace PlatformService
             {
                 endpoints.MapControllers();
             });
-
-            PrepDb.PrepPopulation(app);
         }
     }
 }
