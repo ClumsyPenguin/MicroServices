@@ -22,7 +22,12 @@ You can test calls both with the defined node port number or Nginx:
 
 `http://localhost:31849/api/Platforms`
 
+#### Dockerhub links
+CommandService: https://hub.docker.com/repository/docker/clumpsypenguin/commandservice
+PlatformService: https://hub.docker.com/repository/docker/clumpsypenguin/platformservice
+
 #### Todo's
 - Implement a messagebus *ex. RabbitMQ*
 - Replace in memory DB with a SQL server one
 - Tweaking resources needed for kubernetes network
+
