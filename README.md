@@ -20,7 +20,7 @@ You can test calls both with the defined node port number or Nginx:
 
 `https://acme.com/api/Platforms`
 
-`http://localhost:31849/api/Platforms`
+`http://localhost:<port>/api/Platforms`
 
 #### Dockerhub links
 CommandService: https://hub.docker.com/repository/docker/clumpsypenguin/commandservice
