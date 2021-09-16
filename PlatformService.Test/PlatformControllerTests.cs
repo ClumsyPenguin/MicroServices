@@ -23,7 +23,7 @@ namespace PlatformService.Test
         private readonly Mock<IPlatformRepo> repoStub = new();
         private readonly Mock<ICommandDataClient> commandDataClientStub = new();
         private readonly PlatformsController controller;
-        private static IMapper _mapper;
+        private readonly IMapper _mapper;
 
         #endregion Properties
 
@@ -33,7 +33,7 @@ namespace PlatformService.Test
         {
             if (_mapper == null)
             {
-                var mappingConfig = new MapperConfiguration(mc =>
+                MapperConfiguration mappingConfig = new (mc =>
                 {
                     mc.AddProfile(new PlatformsProfile());
                 });
