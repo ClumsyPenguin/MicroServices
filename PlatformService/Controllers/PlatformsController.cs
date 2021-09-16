@@ -30,13 +30,15 @@ namespace PlatformService.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<PlatformReadDto>> GetAllPlatforms()
         {
+        #if DEBUG
             Console.WriteLine("Getting platforms...");
-
+        #endif
             var platformItem = _repository.GetAllPlaforms();
 
             if (!platformItem.Any())
+            {
                 return NotFound();
-
+            }                
             return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItem));
         }
 
@@ -44,13 +46,17 @@ namespace PlatformService.Controllers
         public ActionResult<PlatformReadDto> GetPlatformById(int id)
         {
             if (id <= 0)
+            {
                 return NotFound();
-
+            }
+            
             var platformItem = _repository.GetPlatformById(id);
 
             if (platformItem is null)
+            {
                 return NotFound();
-
+            }
+            
             return Ok(_mapper.Map<PlatformReadDto>(platformItem));
         }
 
@@ -72,7 +78,9 @@ namespace PlatformService.Controllers
             }
             catch(Exception ex)
             {
+                #if DEBUG
                 Console.WriteLine($"--> Could not send synchronously: {ex.Message}");
+                #endif
             }
 
             return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id }, platformReadDto);

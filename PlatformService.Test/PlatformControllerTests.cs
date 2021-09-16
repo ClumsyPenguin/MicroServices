@@ -79,7 +79,7 @@ namespace PlatformService.Test
         public void GetPlatforms_WithExisitingItems_ReturnsAllItems()
         {
             //Arrange
-            var expectedItems = new List<Platform>() { RandomPlatform(), RandomPlatform(), RandomPlatform() };
+            var expectedItems = new List<Platform> { RandomPlatform(), RandomPlatform(), RandomPlatform() };
 
             repoStub.Setup(s => s.GetAllPlaforms()).Returns(expectedItems);
 
@@ -95,7 +95,7 @@ namespace PlatformService.Test
         public void GetPlatforms_WithUnexisitingItems_ReturnsNotFound()
         {
             //Arrange
-            var expectedItems = new List<Platform>() { };
+            var expectedItems = new List<Platform>{ };
 
             repoStub.Setup(s => s.GetAllPlaforms()).Returns(expectedItems);
 
@@ -147,7 +147,7 @@ namespace PlatformService.Test
 
         #region MockData
 
-        private Platform RandomPlatform()
+        private static Platform RandomPlatform()
         {
             Random rnd = new Random();
             return new()
@@ -159,9 +159,8 @@ namespace PlatformService.Test
             };
         }
 
-        private PlatformCreateDto RandomCreatePlatformDto()
+        private static PlatformCreateDto RandomCreatePlatformDto()
         {
-            Random rnd = new Random();
             return new()
             {
                 Name = "Dotnet",

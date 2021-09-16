@@ -20,19 +20,21 @@ namespace PlatformService.Data
         {
             if (!context.Platforms.Any())
             {
+                #if DEBUG
                 Console.WriteLine("Seeding Data...");
-
+                #endif
                 context.Platforms.AddRange(
-                    new Platform(){Name = "DotNet", Publisher = "Microsoft", Cost = "Free"}, 
-                    new Platform(){Name = "Docker", Publisher = "Docker", Cost = "Free"},
-                    new Platform(){Name = "Coco Cola", Publisher = "Coca Cola Company", Cost = "Free"}
-                    );
-                
+                    new Platform {Name = "DotNet", Publisher = "Microsoft", Cost = "Free"}, 
+                    new Platform{Name = "Docker", Publisher = "Docker", Cost = "Free"},
+                    new Platform{Name = "Coca Cola", Publisher = "Coca Cola Company", Cost = "Free"}
+                    );      
                 context.SaveChanges();
             }
             else
-            {
+            {   
+                #if DEBUG
                 Console.WriteLine("contains already data");
+                #endif
             }
         } 
     }

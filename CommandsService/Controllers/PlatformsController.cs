@@ -11,15 +11,12 @@ namespace CommandsService.Controllers
     [ApiController]
     public class PlatformsController : ControllerBase
     {
-        public PlatformsController()
-        {
-            
-        }
-
          [HttpPost]
         public ActionResult TestInbounConnections()
         {
+            #if DEBUG
             Console.WriteLine("--> Inbound POST # Command Service");
+            #endif
 
             return Ok("Inbound test of from platforms controller");
         }
