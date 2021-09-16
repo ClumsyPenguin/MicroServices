@@ -121,7 +121,7 @@ namespace PlatformService.Test
             repoStub.Setup(s => s.SaveChanges()).Returns(true);
 
             //Act
-            var actionResult = controller.CreatePlatform(expectedItem).Result;
+            var actionResult = controller.CreatePlatform(expectedItem).Result.Result;
             var result = actionResult as CreatedAtRouteResult;
 
             //Asserts
@@ -141,7 +141,7 @@ namespace PlatformService.Test
             var result = controller.CreatePlatform(expectedItem);
 
             //Asserts
-            result.Result.Should().BeOfType<BadRequestResult>();
+            result.Result.Result.Should().BeOfType<BadRequestResult>();
         }
 
         #endregion POST endpoint test
