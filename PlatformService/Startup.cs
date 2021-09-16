@@ -28,7 +28,7 @@ namespace PlatformService
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {;
+        {
             services.AddDbContext<AppDbContext>(opt => 
                 opt.UseInMemoryDatabase("InMem"));
 
@@ -40,7 +40,6 @@ namespace PlatformService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlatformService", Version = "v1" });
             });
-            Console.WriteLine($"--> CommandService Endpoint {Configuration["CommandService"]}");
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -50,8 +49,6 @@ namespace PlatformService
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlatformService v1"));
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -29,9 +29,18 @@ namespace platformservice.SyncDataServices.Http
             var response = await _httpClient.PostAsync(_configuration["CommandService"], httpContent);
 
             if(response.IsSuccessStatusCode)
+            {
+                #if DEBUG
                 Console.WriteLine("--> Sync POST to CommandService was OK!");
+                #endif
+            }           
             else
+            {
+                #if DEBUG
                 Console.WriteLine("--> Sync POST to CommandService was NOT OK!");
+                #endif
+            }
+                
         }
     }
 }

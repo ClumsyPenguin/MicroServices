@@ -64,8 +64,10 @@ namespace PlatformService.Controllers
         public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformCreateDto)
         {
             if (!ModelState.IsValid || platformCreateDto is null)
+            {
                 return BadRequest();
-
+            }
+            
             var platformModel = _mapper.Map<Platform>(platformCreateDto);
             _repository.CreatePlatform(platformModel);
             _repository.SaveChanges();
@@ -76,8 +78,9 @@ namespace PlatformService.Controllers
             {
                 await _commandDataClient.SendPlatformToCommand(platformReadDto);
             }
-            catch(Exception ex)
+            catch(Exception ex) 
             {
+                //sync message exception
                 #if DEBUG
                 Console.WriteLine($"--> Could not send synchronously: {ex.Message}");
                 #endif

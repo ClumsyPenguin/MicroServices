@@ -1,11 +1,11 @@
 # MicroServices
 
-### Prerequisites:
-- Docker Desktop with WSL2 enabled
-- Kubernetes `kubectl`
-- .NET5 Runtime
+## Prerequisites
+-  Docker Desktop with WSL2 enabled
+-  Kubernetes `kubectl`
+-   .NET5 Runtime
 
-#### Deployment Guide
+### Deployment Guide
 1. Clone/Fork repo
 2. Open K8S folder 
 3. Run all the deployments on your local machine `kubectl create deployment <FileName>`

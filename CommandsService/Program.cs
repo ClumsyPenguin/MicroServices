@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CommandsService
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {

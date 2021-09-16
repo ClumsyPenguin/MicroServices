@@ -12,6 +12,7 @@ using PlatformService.Dtos;
 using System.Collections.Generic;
 using PlatformService.Profiles;
 using System.Linq;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService.Test
 {
@@ -19,8 +20,9 @@ namespace PlatformService.Test
     {
         #region Properties
 
-        private Mock<IPlatformRepo> repoStub = new();
-        private PlatformsController controller;
+        private readonly Mock<IPlatformRepo> repoStub = new();
+        private readonly Mock<ICommandDataClient> commandDataClientStub = new();
+        private readonly PlatformsController controller;
         private static IMapper _mapper;
 
         #endregion Properties
@@ -39,7 +41,7 @@ namespace PlatformService.Test
                 _mapper = mapper;
             }
             repoStub = new Mock<IPlatformRepo>(MockBehavior.Strict);
-            controller = new PlatformsController(repoStub.Object, _mapper);
+            controller = new PlatformsController(repoStub.Object, _mapper, commandDataClientStub.Object);
         }
 
         #endregion Constructor
