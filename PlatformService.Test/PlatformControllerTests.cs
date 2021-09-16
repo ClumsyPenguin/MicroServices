@@ -37,8 +37,7 @@ namespace PlatformService.Test
                 {
                     mc.AddProfile(new PlatformsProfile());
                 });
-                IMapper mapper = mappingConfig.CreateMapper();
-                _mapper = mapper;
+                _mapper = mappingConfig.CreateMapper();
             }
             repoStub = new Mock<IPlatformRepo>(MockBehavior.Strict);
             controller = new PlatformsController(repoStub.Object, _mapper, commandDataClientStub.Object);
@@ -52,7 +51,7 @@ namespace PlatformService.Test
         public void GetPlatform_WithUnexisitingItem_ReturnsNotFound()
         {
             //Act
-            var expected = new Platform() { Id = 1, Name = "Dotnet", Publisher = "Microsoft", Cost = "Free" };
+            var expected = new Platform { Id = 1, Name = "Dotnet", Publisher = "Microsoft", Cost = "Free" };
 
             var result = controller.GetPlatformById(0);
             //Assert
