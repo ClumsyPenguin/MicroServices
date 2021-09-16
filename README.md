@@ -1,5 +1,4 @@
-# MicroServices
-
+# MicroServices [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1dbb88ab0f76426b83a2cc769183e905)](https://www.codacy.com/gh/ClumsyPenguin/MicroServices/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ClumsyPenguin/MicroServices&amp;utm_campaign=Badge_Grade)
 ## Prerequisites
 -  Docker Desktop with WSL2 enabled
 -  Kubernetes `kubectl`
