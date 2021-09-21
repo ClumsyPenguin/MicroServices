@@ -1,7 +1,6 @@
 using System;
 using Xunit;
 using Moq;
-using System.Threading.Tasks;
 using PlatformService.Data;
 using PlatformService.Controllers;
 using AutoMapper;
@@ -11,7 +10,6 @@ using PlatformService.Models;
 using PlatformService.Dtos;
 using System.Collections.Generic;
 using PlatformService.Profiles;
-using System.Linq;
 using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService.Test
@@ -28,7 +26,6 @@ namespace PlatformService.Test
         #endregion Properties
 
         #region Constructor
-
         public PlatformControllerTests()
         {
             if (_mapper == null)
@@ -43,7 +40,7 @@ namespace PlatformService.Test
             controller = new PlatformsController(repoStub.Object, _mapper, commandDataClientStub.Object);
         }
 
-        #endregion Constructor
+        #endregion
 
         #region GET endpoint tests
 
@@ -107,7 +104,7 @@ namespace PlatformService.Test
             result.Result.Should().BeOfType<NotFoundResult>();
         }
 
-        #endregion GET endpoint tests
+        #endregion
 
         #region POST endpoint test
 
@@ -144,7 +141,7 @@ namespace PlatformService.Test
             result.Result.Result.Should().BeOfType<BadRequestResult>();
         }
 
-        #endregion POST endpoint test
+        #endregion
 
         #region MockData
 
@@ -170,6 +167,6 @@ namespace PlatformService.Test
             };
         }
 
-        #endregion MockData
+        #endregion
     }
 }

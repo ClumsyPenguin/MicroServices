@@ -20,18 +20,28 @@ namespace PlatformService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        private IWebHostEnvironment _env { get; }
+        
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(opt => 
-                opt.UseInMemoryDatabase("InMem"));
-
+            if (_env.IsProduction())
+            {
+                services.AddDbContext<AppDbContext>(opt =>
+                    opt.UseSqlServer(Configuration.GetConnectionString("PlatfromsConn")));
+            }
+            else
+            {
+                Console.WriteLine("Using In Memory database");
+                services.AddDbContext<AppDbContext>(opt =>
+                    opt.UseInMemoryDatabase("InMem"));
+            }
             services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddControllers();
