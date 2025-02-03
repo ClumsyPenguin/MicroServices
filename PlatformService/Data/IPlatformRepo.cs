@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using PlatformService.Models;
 
 namespace PlatformService.Data
@@ -7,8 +6,7 @@ namespace PlatformService.Data
     public interface IPlatformRepo
     {
         bool SaveChanges();
-
-        IEnumerable<Platform> GetAllPlaforms();
+        IEnumerable<Platform> GetAllPlatforms();
         Platform GetPlatformById(int id);
         void CreatePlatform(Platform plat);
     }

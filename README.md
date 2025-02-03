@@ -1,12 +1,15 @@
-# MicroServices [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1dbb88ab0f76426b83a2cc769183e905)](https://www.codacy.com/gh/ClumsyPenguin/MicroServices/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ClumsyPenguin/MicroServices&amp;utm_campaign=Badge_Grade)
+# MicroServices [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1dbb88ab0f76426b83a2cc769183e905)](https://www.codacy.com/gh/ClumsyPenguin/MicroServices/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ClumsyPenguin/MicroServices&utm_campaign=Badge_Grade)
+
 ## Prerequisites
--  Docker Desktop with WSL2 enabled
--  Kubernetes `kubectl`
--   .NET5 Runtime
+
+- Docker Desktop with WSL2 enabled
+- Kubernetes `kubectl`
+- .NET9 Runtime
 
 ### Deployment Guide
+
 1. Clone/Fork repo
-2. Open K8S folder 
+2. Open K8S folder
 3. Run all the deployments on your local machine `kubectl create deployment <FileName>`
 4. Go to `C:\Windows\System32\drivers\etc\hosts` and add on a blank line `127.0.0.0.1 acme.com`
 5. Congrats your kubernetes network is up and running
@@ -22,12 +25,13 @@ You can test calls both with the defined node port number or Nginx:
 `http://localhost:<port>/api/Platforms`
 
 #### Dockerhub links
+
 CommandService: https://hub.docker.com/repository/docker/clumpsypenguin/commandservice
 
 PlatformService: https://hub.docker.com/repository/docker/clumpsypenguin/platformservice
 
 #### Todo's
-- Implement a messagebus *ex. RabbitMQ*
+
+- Implement a messagebus _ex. RabbitMQ_
 - Replace in memory DB with a SQL server one
 - Tweaking resources needed for kubernetes network
-

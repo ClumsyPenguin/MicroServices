@@ -7,8 +7,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
 using PlatformService.Models;
-using PlatformService.Dtos;
 using System.Collections.Generic;
+using PlatformService.DTOs;
 using PlatformService.Profiles;
 using PlatformService.SyncDataServices.Http;
 
@@ -61,7 +61,7 @@ namespace PlatformService.Test
         {
             //Act
             var expectedItem = RandomPlatform();
-            var exptectedDtoItem = _mapper.Map<PlatformReadDto>(expectedItem);
+            var exptectedDtoItem = _mapper.Map<PlatformReadDTO>(expectedItem);
 
             repoStub.Setup(s => s.GetPlatformById(expectedItem.Id)).Returns(expectedItem);
 
@@ -70,7 +70,7 @@ namespace PlatformService.Test
             var result = actionResult as OkObjectResult;
 
             //Assert
-            result.Value.Should().BeEquivalentTo(exptectedDtoItem, opt => opt.ComparingByMembers<PlatformReadDto>());
+            result!.Value.Should().BeEquivalentTo(exptectedDtoItem, opt => opt.ComparingByMembers<PlatformReadDTO>());
         }
 
         [Fact]
@@ -79,23 +79,23 @@ namespace PlatformService.Test
             //Arrange
             var expectedItems = new List<Platform> { RandomPlatform(), RandomPlatform(), RandomPlatform() };
 
-            repoStub.Setup(s => s.GetAllPlaforms()).Returns(expectedItems);
+            repoStub.Setup(s => s.GetAllPlatforms()).Returns(expectedItems);
 
             //Act
             var actionResult = controller.GetAllPlatforms().Result;
             var result = actionResult as OkObjectResult;
 
             //Asserts
-            result.Value.Should().BeEquivalentTo(expectedItems, opt => opt.ComparingByMembers<List<PlatformReadDto>>());
+            result!.Value.Should().BeEquivalentTo(expectedItems, opt => opt.ComparingByMembers<List<PlatformReadDTO>>());
         }
 
         [Fact]
         public void GetPlatforms_WithUnexisitingItems_ReturnsNotFound()
         {
             //Arrange
-            var expectedItems = new List<Platform>{ };
+            var expectedItems = new List<Platform>();
 
-            repoStub.Setup(s => s.GetAllPlaforms()).Returns(expectedItems);
+            repoStub.Setup(s => s.GetAllPlatforms()).Returns(expectedItems);
 
             //Act
             var result = controller.GetAllPlatforms();
@@ -122,14 +122,14 @@ namespace PlatformService.Test
             var result = actionResult as CreatedAtRouteResult;
 
             //Asserts
-            result.Value.Should().BeEquivalentTo(expectedItem, opt => opt.ComparingByMembers<PlatformReadDto>());
+            result!.Value.Should().BeEquivalentTo(expectedItem, opt => opt.ComparingByMembers<PlatformReadDTO>());
         }
 
         [Fact]
         public void CreatePlatforms_WithInvalidData_ReturnsBadRequest()
         {
             //Arrange
-            PlatformCreateDto expectedItem = null;
+            PlatformCreateDTO expectedItem = null;
 
             repoStub.Setup(s => s.CreatePlatform(It.IsAny<Platform>()));
             repoStub.Setup(s => s.SaveChanges()).Returns(true);
@@ -147,8 +147,8 @@ namespace PlatformService.Test
 
         private static Platform RandomPlatform()
         {
-            Random rnd = new Random();
-            return new()
+            var rnd = new Random();
+            return new Platform
             {
                 Id = rnd.Next(0, 10),
                 Name = "Dotnet",
@@ -157,9 +157,9 @@ namespace PlatformService.Test
             };
         }
 
-        private static PlatformCreateDto RandomCreatePlatformDto()
+        private static PlatformCreateDTO RandomCreatePlatformDto()
         {
-            return new()
+            return new PlatformCreateDTO
             {
                 Name = "Dotnet",
                 Publisher = "Microsoft",

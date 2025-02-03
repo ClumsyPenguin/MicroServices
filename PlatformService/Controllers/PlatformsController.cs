@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data;
-using PlatformService.Dtos;
+using PlatformService.DTOs;
 using PlatformService.Models;
 using PlatformService.SyncDataServices.Http;
 
@@ -14,69 +13,59 @@ namespace PlatformService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlatformsController : ControllerBase
+    public class PlatformsController(IPlatformRepo repository, IMapper mapper, ICommandDataClient commandDataClient)
+        : ControllerBase
     {
-        private readonly IPlatformRepo _repository;
-        private readonly IMapper _mapper;
-        private readonly ICommandDataClient _commandDataClient;
-
-        public PlatformsController(IPlatformRepo repository, IMapper mapper, ICommandDataClient commandDataClient)
-        {
-            _repository = repository;
-            _mapper = mapper;
-            _commandDataClient = commandDataClient; 
-        }
-
         [HttpGet]
-        public ActionResult<IEnumerable<PlatformReadDto>> GetAllPlatforms()
+        public ActionResult<IEnumerable<PlatformReadDTO>> GetAllPlatforms()
         {
         #if DEBUG
             Console.WriteLine("Getting platforms...");
         #endif
-            var platformItem = _repository.GetAllPlaforms();
+            var platformItem = repository.GetAllPlatforms();
 
             if (!platformItem.Any())
             {
                 return NotFound();
             }                
-            return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItem));
+            return Ok(mapper.Map<IEnumerable<PlatformReadDTO>>(platformItem));
         }
 
         [HttpGet("{id}", Name = "GetPlatformById")]
-        public ActionResult<PlatformReadDto> GetPlatformById(int id)
+        public ActionResult<PlatformReadDTO> GetPlatformById(int id)
         {
             if (id <= 0)
             {
                 return NotFound();
             }
             
-            var platformItem = _repository.GetPlatformById(id);
+            var platformItem = repository.GetPlatformById(id);
 
             if (platformItem is null)
             {
                 return NotFound();
             }
             
-            return Ok(_mapper.Map<PlatformReadDto>(platformItem));
+            return Ok(mapper.Map<PlatformReadDTO>(platformItem));
         }
 
         [HttpPost]
-        public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformCreateDto)
+        public async Task<ActionResult<PlatformReadDTO>> CreatePlatform(PlatformCreateDTO platformCreateDto)
         {
             if (!ModelState.IsValid || platformCreateDto is null)
             {
                 return BadRequest();
             }
             
-            var platformModel = _mapper.Map<Platform>(platformCreateDto);
-            _repository.CreatePlatform(platformModel);
-            _repository.SaveChanges();
+            var platformModel = mapper.Map<Platform>(platformCreateDto);
+            repository.CreatePlatform(platformModel);
+            repository.SaveChanges();
 
-            var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
+            var platformReadDto = mapper.Map<PlatformReadDTO>(platformModel);
 
             try
             {
-                await _commandDataClient.SendPlatformToCommand(platformReadDto);
+                await commandDataClient.SendPlatformToCommand(platformReadDto);
             }
             catch(Exception ex) 
             {
@@ -86,7 +75,7 @@ namespace PlatformService.Controllers
                 #endif
             }
 
-            return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id }, platformReadDto);
+            return CreatedAtRoute(nameof(GetPlatformById), new { platformReadDto.Id }, platformReadDto);
         }
     }
 }

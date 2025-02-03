@@ -1,18 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommandsService.Controllers
 {
-    [Route("api/c/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PlatformsController : ControllerBase
     {
          [HttpPost]
-        public ActionResult TestInbounConnections()
+        public ActionResult TestInboundConnections()
         {
             #if DEBUG
             Console.WriteLine("--> Inbound POST # Command Service");

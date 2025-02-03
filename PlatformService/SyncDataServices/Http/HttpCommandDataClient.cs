@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using PlatformService.Dtos;
+using PlatformService.DTOs;
 using PlatformService.SyncDataServices.Http;
 
 namespace platformservice.SyncDataServices.Http
@@ -19,7 +19,7 @@ namespace platformservice.SyncDataServices.Http
             _httpClient = httpClient;
             _configuration = configuration;
         }
-        public async Task SendPlatformToCommand(PlatformReadDto plat)
+        public async Task SendPlatformToCommand(PlatformReadDTO plat)
         {
             var httpContent = new StringContent(
                 JsonSerializer.Serialize(plat),

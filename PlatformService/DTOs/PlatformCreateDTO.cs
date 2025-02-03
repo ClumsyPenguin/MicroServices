@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PlatformService.Dtos
+namespace PlatformService.DTOs
 {
-    public class PlatformCreateDto
+    public class PlatformCreateDTO
     {
         [Required]
         public string Name { get; set; }   
