@@ -14,6 +14,9 @@
 4. Go to `C:\Windows\System32\drivers\etc\hosts` and add on a blank line `127.0.0.0.1 acme.com`
 5. Congrats your kubernetes network is up and running
 
+If your MsSQL deployment won't start up, you most likely need to add the password secret to the pvc
+`kubectl create secret generic mssql --from-literal=SA_PASSWORD='pa55w0rd!'`
+
 For now every service has its own Pod.
 
 ![Capture](https://user-images.githubusercontent.com/22469147/133261406-47943723-ccc2-4527-9279-1263e2c7a862.PNG)
