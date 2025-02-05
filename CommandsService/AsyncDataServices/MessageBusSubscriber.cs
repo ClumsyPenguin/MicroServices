@@ -25,20 +25,18 @@ namespace CommandsService.AsyncDataServices
             _configuration = configuration;
             _eventProcessor = eventProcessor;
 
-            InitializeRabbitMQ();
+            InitializeRabbitMq();
         }
 
-        private void InitializeRabbitMQ()
+        private void InitializeRabbitMq()
         {
-            var factory = new ConnectionFactory() { HostName = _configuration["RabbitMQHost"], Port = int.Parse(_configuration["RabbitMQPort"])};
+            var factory = new ConnectionFactory { HostName = _configuration["RabbitMQHost"], Port = int.Parse(_configuration["RabbitMQPort"])};
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
             _queueName = _channel.QueueDeclare().QueueName;
-            _channel.QueueBind(queue: _queueName,
-                exchange: "trigger",
-                routingKey: "");
+            _channel.QueueBind(queue: _queueName, exchange: "trigger", routingKey: "");
 
             Console.WriteLine("--> Listenting on the Message Bus...");
 
