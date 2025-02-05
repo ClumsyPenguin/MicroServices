@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -11,44 +11,43 @@ namespace PlatformService.Data
     {
         public static void PrepPopulation(IApplicationBuilder app, bool isProd)
         {
-            using var serviceScope = app.ApplicationServices.CreateScope();
-            SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>(), isProd);
+            using( var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>(), isProd);
+            }
         }
 
         private static void SeedData(AppDbContext context, bool isProd)
         {
-            if (isProd)
+            if(isProd)
             {
                 Console.WriteLine("--> Attempting to apply migrations...");
                 try
                 {
                     context.Database.Migrate();
                 }
-                catch (Exception e)
+                catch(Exception ex)
                 {
-                    Console.WriteLine($"--> Failed to apply migrations. {e.Message}");
+                    Console.WriteLine($"--> Could not run migrations: {ex.Message}");
                 }
             }
-                
             
-            if (!context.Platforms.Any())
+            if(!context.Platforms.Any())
             {
-                #if DEBUG
-                Console.WriteLine("Seeding Data...");
-                #endif
+                Console.WriteLine("--> Seeding Data...");
+
                 context.Platforms.AddRange(
-                    new Platform {Name = "DotNet", Publisher = "Microsoft", Cost = "Free"}, 
-                    new Platform{Name = "Docker", Publisher = "Docker", Cost = "Free"},
-                    new Platform{Name = "Coca Cola", Publisher = "Coca Cola Company", Cost = "Free"}
-                    );      
+                    new Platform() {Name="Dot Net", Publisher="Microsoft", Cost="Free"},
+                    new Platform() {Name="SQL Server Express", Publisher="Microsoft",  Cost="Free"},
+                    new Platform() {Name="Kubernetes", Publisher="Cloud Native Computing Foundation",  Cost="Free"}
+                );
+
                 context.SaveChanges();
             }
             else
-            {   
-                #if DEBUG
-                Console.WriteLine("contains already data");
-                #endif
+            {
+                Console.WriteLine("--> We already have data");
             }
-        } 
+        }
     }
 }

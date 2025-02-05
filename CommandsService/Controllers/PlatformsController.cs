@@ -1,21 +1,41 @@
 using System;
+using System.Collections.Generic;
+using AutoMapper;
+using CommandsService.Data;
+using CommandsService.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommandsService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/c/[controller]")]
     [ApiController]
     public class PlatformsController : ControllerBase
     {
-         [HttpPost]
-        public ActionResult TestInboundConnections()
-        {
-            #if DEBUG
-            Console.WriteLine("--> Inbound POST # Command Service");
-            #endif
+        private readonly ICommandRepo _repository;
+        private readonly IMapper _mapper;
 
-            return Ok("Inbound test of from platforms controller");
+        public PlatformsController(ICommandRepo repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<PlatformreadDTO>> GetPlatforms()
+        {
+            Console.WriteLine("--> Getting Platforms from CommandsService");
+
+            var platformItems = _repository.GetAllPlatforms();
+
+            return Ok(_mapper.Map<IEnumerable<PlatformreadDTO>>(platformItems));
+        }
+
+        [HttpPost]
+        public ActionResult TestInboundConnection()
+        {
+            Console.WriteLine("--> Inbound POST # Command Service");
+
+            return Ok("Inbound test of from Platforms Controler");
         }
     }
-    
 }

@@ -5,9 +5,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using PlatformService.DTOs;
-using PlatformService.SyncDataServices.Http;
 
-namespace platformservice.SyncDataServices.Http
+namespace PlatformService.SyncDataServices.Http
 {
     public class HttpCommandDataClient : ICommandDataClient
     {
@@ -19,6 +18,7 @@ namespace platformservice.SyncDataServices.Http
             _httpClient = httpClient;
             _configuration = configuration;
         }
+        
         public async Task SendPlatformToCommand(PlatformReadDTO plat)
         {
             var httpContent = new StringContent(
@@ -26,21 +26,11 @@ namespace platformservice.SyncDataServices.Http
                 Encoding.UTF8,
                 "application/json");
 
-            var response = await _httpClient.PostAsync(_configuration["CommandService"], httpContent);
+            var response = await _httpClient.PostAsync($"{_configuration["CommandService"]}", httpContent);
 
-            if(response.IsSuccessStatusCode)
-            {
-                #if DEBUG
-                Console.WriteLine("--> Sync POST to CommandService was OK!");
-                #endif
-            }           
-            else
-            {
-                #if DEBUG
-                Console.WriteLine("--> Sync POST to CommandService was NOT OK!");
-                #endif
-            }
-                
+            Console.WriteLine(response.IsSuccessStatusCode
+                ? "--> Sync POST to CommandService was OK!"
+                : "--> Sync POST to CommandService was NOT OK!");
         }
     }
 }
