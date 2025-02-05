@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,10 +21,6 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\platforms.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CommandsService\CommandsService.csproj" />
   </ItemGroup>
 
 </Project>
